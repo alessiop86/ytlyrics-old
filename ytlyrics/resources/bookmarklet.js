@@ -135,25 +135,44 @@
 	function ytLyricsFetchContent() {
 		(window.myBookmarklet = function() {			
 
-			var stringa_title = document.title;
-	
-			stringa_title = stringa_title.replace(/\([^\)]*\)/g , "");
-			stringa_title = stringa_title.replace(/\[[^\]]*\]/g , "");
-			stringa_title = stringa_title.replace(/M\/V/, "");			
-			stringa_title = stringa_title.replace(/\- YouTube/, "");
-			stringa_title = stringa_title.replace(/▶/,"");
 
-			var youtube_details = stringa_title.split("-");			
+            var url_site = document.baseURI;
+            var stringa_title = document.title;
+
+            if (url_site.match(/youtube/)) {
 
 
-			var artist = youtube_details[0];
-			var title;
-            if (youtube_details[1] === undefined)
-                title = "";
-            else
-                title = youtube_details[1];
+
+                stringa_title = stringa_title.replace(/\([^\)]*\)/g , "");
+                stringa_title = stringa_title.replace(/\[[^\]]*\]/g , "");
+                stringa_title = stringa_title.replace(/M\/V/, "");
+                stringa_title = stringa_title.replace(/\- YouTube/, "");
+                stringa_title = stringa_title.replace(/▶/,"");
+
+                var youtube_details = stringa_title.split("-");
+
+
+                var artist = youtube_details[0];
+                var title;
+                if (youtube_details[1] === undefined)
+                    title = "";
+                else
+                    title = youtube_details[1];
+
 
 			ytlyricsDoSearch(artist,title,true);
+
+            }
+            /* demo support for grooveshark */
+            else if (url_site.match(/grooveshark/)) {
+
+                var myRegex = /^(?:▶ )?"(.*)" by (.*) (?:on "(.*))?(?:- Profile)? - Grooveshark$/;
+                var match = myRegex.exec(stringa_title);
+
+                if (match !== null)
+                    ytlyricsDoSearch(match[2],match[1],false);
+            }
+
 
 		})();
 	}
