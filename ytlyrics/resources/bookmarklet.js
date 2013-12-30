@@ -1,8 +1,36 @@
 ﻿	var localpath = '';
 	localpath = 'http://www.summarify.com/ytlyrics/'
-	localpath_en = localpath + 'en/'
 
-	/*prima esecuzione*/
+
+    var language_pack = {
+        'localpath': localpath + 'en/',
+        'iemessage': "YTLyrics is not compatible with Internet Explorer < 9.0. Please update your browser.",
+        'reportbug': 'Report a bug',
+        'credits' : 'Credits',
+        'loading' : ' Loading ',
+        'searchlyrics' : 'Search lyrics',
+        'artist' : 'Artist',
+        'song' : 'Song',
+        'nolyricsfound1' : ' No lyrics found for: "',
+        'nolyricsfound2': '" (song title) and "',
+        'nolyricsfound3' : ' "(artist). ',
+        'modifysearch' : 'You can modify the research if the detected artist or the song name are wrong:<br/>'
+
+
+
+    };
+
+    function trim1 (str) {
+        return str.replace(/^\s\s*/, '').replace(/\s\s*$/, '');
+    }
+
+    function capitaliseFirstLetter(string)
+    {
+        return string.charAt(0).toUpperCase() + string.slice(1);
+    }
+
+
+    /*prima esecuzione*/
 	if(window.myBookmarklet===undefined) {
 			
 			var rv = 10.0;
@@ -12,7 +40,7 @@
             rv = parseFloat(RegExp.$1);
     	
         if (rv < 9) {
-        	alert("YTLyrics is not compatible with Internet Explorer < 9.0. Please update your browser.")
+        	alert(language_pack.iemessage)
         }
         else {
 
@@ -71,7 +99,7 @@
 
 		var header_bookmarklet_div = '<button type="button" class="close" id="bookmarklet_yt_button">×</button><a href="' + localpath + '" target="_blank"><img src="' + localpath + 'resources/logo.png" alt="yt lyrics" /></a>';
 		header_bookmarklet_div += "<div id='bookmarklet_yt2_content'></div>";
-		header_bookmarklet_div +='<div class="ytlinksbar"><div class="small" id="bookmarklet_yt_increasefont"><button class="close">+</button></div><div class="small notfirst" id="bookmarklet_yt_reducefont"><button class="close" style="margin-top:-3px">-</button></div><div class="small notfirst"><a href="https://www.facebook.com/pages/YTLyrics/425290784236106" target="_blank"><img src="' + localpath + 'resources/facebook-icon.png" style="height:16px;" /></a></div><div class="small notfirst"><a href="' + localpath_en + '#credits" target="_blank">Credits</a></div><div class="small notfirst" ><a href="' + localpath_en + '#new-features-and-bug-report" target="_blank">Suggest a feature </a></div><div class="small notfirst"><a href="' + localpath_en + '#new-features-and-bug-report" target="_blank">Report a bug</a></div></div>';
+		header_bookmarklet_div +='<div class="ytlinksbar"><div class="small" id="bookmarklet_yt_increasefont"><button class="close">+</button></div><div class="small notfirst" id="bookmarklet_yt_reducefont"><button class="close" style="margin-top:-3px">-</button></div><div class="small notfirst"><a href="https://www.facebook.com/pages/YTLyrics/425290784236106" target="_blank"><img src="' + localpath + 'resources/facebook-icon.png" style="height:16px;" /></a></div><div class="small notfirst"><a href="' + language_pack.localpath + '#credits" target="_blank">' + language_pack.credits +'</a></div><div class="small notfirst" ><a href="' + language_pack.localpath + '#new-features-and-bug-report" target="_blank">Suggest a feature </a></div><div class="small notfirst"><a href="' + language_pack.localpath + '#new-features-and-bug-report" target="_blank">' + language_pack.reportbug +'</a></div></div>';
 
 
 			$('#bookmarklet_yt2_container').html(header_bookmarklet_div);
@@ -113,13 +141,19 @@
 			stringa_title = stringa_title.replace(/\[[^\]]*\]/g , "");
 			stringa_title = stringa_title.replace(/M\/V/, "");			
 			stringa_title = stringa_title.replace(/\- YouTube/, "");
-			
-			var youtube_details = stringa_title.split("-");			
-			
-			var artist = youtube_details[0];
-			var title = youtube_details[1];
+			stringa_title = stringa_title.replace(/▶/,"");
 
-			ytlyricsDoSearch(artist,title);						
+			var youtube_details = stringa_title.split("-");			
+
+
+			var artist = youtube_details[0];
+			var title;
+            if (youtube_details[1] === undefined)
+                title = "";
+            else
+                title = youtube_details[1];
+
+			ytlyricsDoSearch(artist,title,true);
 
 		})();
 	}
@@ -139,14 +173,19 @@
 
 	function ytLyricsFormSearch2() {
 
-		ytlyricsDoSearch($("#ytlyricsartist").val(),$("#ytlyricstitle").val());
+		ytlyricsDoSearch($("#ytlyricsartist").val(),$("#ytlyricstitle").val(),true);
 
 	}
 
-	function ytlyricsDoSearch(artist, title) {
+	function ytlyricsDoSearch(artist, title, swap_title_artist_if_no_match) {
+
+        if (swap_title_artist_if_no_match === true) {
+            artist = capitaliseFirstLetter(trim1(artist));
+            title = capitaliseFirstLetter(trim1(title));
+        }
 
 			$("#bookmarklet_yt2_container").show();
-			$('#bookmarklet_yt2_content').html('<div id="bookmarklet_yt2_inner_content"><div id="bookmarklet_yt2_inner_content_lyrics"><p style="margin: 8px 0 0 8px">loading <img src="' + localpath +'resources/ajax-loader.gif" alt="loading" /></p></div></div>');
+			$('#bookmarklet_yt2_content').html('<div id="bookmarklet_yt2_inner_content"><div id="bookmarklet_yt2_inner_content_lyrics"><p style="margin: 8px 0 0 8px">'+ language_pack.loading+'<img src="' + localpath +'resources/ajax-loader.gif" alt="loading" /></p></div></div>');
 
 		var script = document.createElement("script");
 		script.src = "http://lyrics.wikia.com/api.php?fmt=json&artist=" + encodeURIComponent(artist) +"&song=" + encodeURIComponent(title);
@@ -157,33 +196,59 @@
 
 			YUI().use('node', 'event', 'yql', function(Y) {
 
-			    var yql_query = "select * from html where url='" + song.url +"'";
-			    yql_query += " and xpath=\"//div[@class='lyricbox']\"";
 
-			    Y.YQL(yql_query, function(response) {
+                try {
 
+                    var yql_query = "select * from html where url='" + song.url +"'";
+                    yql_query += " and xpath=\"//div[@class='lyricbox']\"";
 
-
-					if(response.query.results){
-						var message_header = "<h2> <strong>" + title + "</strong> - <strong>" +artist +"</strong></h2>";
-						$('#bookmarklet_yt2_content').html(  '<div id="bookmarklet_yt2_inner_content">' + message_header +  '<div id="bookmarklet_yt2_inner_content_lyrics">' + response.query.results.div.p.content.split(' \n ').join('<br />') + '<br/><br/><hr/><p><a href="' + song.url + '" target="_blank">' + song.url +"</a></p>" +"</div></div>");
-					} else{	
-
-						var ytLyricsForm = '<form id="ytLyricsForm"><div class="ytLyricsField"><label>Artist</label><input type="text" name="artist" id="ytlyricsartist" placeholder="artist" value="' + artist + '"/></div>';
-						ytLyricsForm += '<div class="ytLyricsField"><label>Song</label><input type="text" name="title" id="ytlyricstitle" placeholder="song" value="' + title + '"/></div>';
-						ytLyricsForm += '<div class="ytLyricsButton" onclick="javascript:ytLyricsFormSearch2();">Search lyrics</div></form>';
+                    Y.YQL(yql_query, function(response) {
 
 
-						var ytLyricsOutput = '<div id="bookmarklet_yt2_inner_content">' +'<div id="bookmarklet_yt2_inner_content_lyrics">'
-						ytLyricsOutput += ' No lyrics found for: "' +  title + '" (song title) and "' +artist  + ' "(artist). ';
-						ytLyricsOutput += 'You can modify the research if the detected artist or the song name are wrong:<br/>' + ytLyricsForm + "</div></div>"
 
-						$('#bookmarklet_yt2_content').html( ytLyricsOutput);					      
+                        if(response.query.results){
+                            var message_header = "<h2> <strong>" + title + "</strong> - <strong>" +artist +"</strong></h2>";
+                            $('#bookmarklet_yt2_content').html(  '<div id="bookmarklet_yt2_inner_content">' + message_header +  '<div id="bookmarklet_yt2_inner_content_lyrics">' + response.query.results.div.p.content.split(' \n ').join('<br />') + '<br/><br/><hr/><p><a href="' + song.url + '" target="_blank">' + song.url +"</a></p>" +"</div></div>");
+                        } else{
 
-					}		      		      
-			      
-			    });
-			  
+                            if (swap_title_artist_if_no_match === true) {
+
+                                ytlyricsDoSearch(title,artist,false);
+                            }
+                            else {
+
+                                var ytLyricsForm = '<form id="ytLyricsForm"><div class="ytLyricsField"><label>' + language_pack.artist + '</label><input type="text" name="artist" id="ytlyricsartist" placeholder="artist" value="' + title + '"/></div>';
+                                ytLyricsForm += '<div class="ytLyricsField"><label>' + language_pack.song + '</label><input type="text" name="title" id="ytlyricstitle" placeholder="song" value="' + artist + '"/></div>';
+                                ytLyricsForm += '<div class="ytLyricsButton" onclick="javascript:ytLyricsFormSearch2();">'+ language_pack.searchlyrics +'</div></form>';
+
+
+                                var ytLyricsOutput = '<div id="bookmarklet_yt2_inner_content">' +'<div id="bookmarklet_yt2_inner_content_lyrics">'
+                                ytLyricsOutput += language_pack.nolyricsfound1 +  artist + language_pack.nolyricsfound2 +title  + language_pack.nolyricsfound3;
+                                ytLyricsOutput += language_pack.modifysearch + ytLyricsForm + "</div></div>"
+
+                                $('#bookmarklet_yt2_content').html( ytLyricsOutput);
+
+
+                            }
+
+                        }
+
+                    });
+
+                } catch(e) {
+
+                    var ytLyricsForm = '<form id="ytLyricsForm"><div class="ytLyricsField"><label>' + language_pack.artist + '</label><input type="text" name="artist" id="ytlyricsartist" placeholder="artist" value="' + title + '"/></div>';
+                    ytLyricsForm += '<div class="ytLyricsField"><label>' + language_pack.song + '</label><input type="text" name="title" id="ytlyricstitle" placeholder="song" value="' + artist + '"/></div>';
+                    ytLyricsForm += '<div class="ytLyricsButton" onclick="javascript:ytLyricsFormSearch2();">'+ language_pack.searchlyrics +'</div></form>';
+
+
+                    var ytLyricsOutput = '<div id="bookmarklet_yt2_inner_content">' +'<div id="bookmarklet_yt2_inner_content_lyrics">'
+                    ytLyricsOutput += language_pack.nolyricsfound1 +  artist + language_pack.nolyricsfound2 +title  + language_pack.nolyricsfound3;
+                    ytLyricsOutput += language_pack.modifysearch + ytLyricsForm + "</div></div>"
+
+                    $('#bookmarklet_yt2_content').html( ytLyricsOutput);
+
+                }
 			});     
 		
 
