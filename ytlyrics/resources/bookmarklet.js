@@ -6,6 +6,7 @@
         'localpath': localpath + 'en/',
         'iemessage': "YTLyrics is not compatible with Internet Explorer < 9.0. Please update your browser.",
         'reportbug': 'Report a bug',
+        'suggestions' : 'Suggerimenti',
         'credits' : 'Credits',
         'loading' : ' Loading ',
         'searchlyrics' : 'Search lyrics',
@@ -99,7 +100,7 @@
 
 		var header_bookmarklet_div = '<button type="button" class="close" id="bookmarklet_yt_button">×</button><a href="' + localpath + '" target="_blank"><img src="' + localpath + 'resources/logo.png" alt="yt lyrics" /></a>';
 		header_bookmarklet_div += "<div id='bookmarklet_yt2_content'></div>";
-		header_bookmarklet_div +='<div class="ytlinksbar"><div class="small" id="bookmarklet_yt_increasefont"><button class="close">+</button></div><div class="small notfirst" id="bookmarklet_yt_reducefont"><button class="close" style="margin-top:-3px">-</button></div><div class="small notfirst"><a href="https://www.facebook.com/pages/YTLyrics/425290784236106" target="_blank"><img src="' + localpath + 'resources/facebook-icon.png" style="height:16px;" /></a></div><div class="small notfirst"><a href="' + language_pack.localpath + '#credits" target="_blank">' + language_pack.credits +'</a></div><div class="small notfirst" ><a href="' + language_pack.localpath + '#new-features-and-bug-report" target="_blank">Suggest a feature </a></div><div class="small notfirst"><a href="' + language_pack.localpath + '#new-features-and-bug-report" target="_blank">' + language_pack.reportbug +'</a></div></div>';
+		header_bookmarklet_div +='<div class="ytlinksbar"><div class="small" id="bookmarklet_yt_increasefont"><button class="close">+</button></div><div class="small notfirst" id="bookmarklet_yt_reducefont"><button class="close" style="margin-top:-3px">-</button></div><div class="small notfirst"><a href="https://www.facebook.com/pages/YTLyrics/425290784236106" target="_blank"><img src="' + localpath + 'resources/facebook-icon.png" style="height:16px;" /></a></div><div class="small notfirst"><a href="' + language_pack.localpath + '#credits" target="_blank">' + language_pack.credits +'</a></div><div class="small notfirst" ><a href="' + language_pack.localpath + '#new-features-and-bug-report" target="_blank">' + language_pack.suggestions +'</a></div><div class="small notfirst"><a href="' + language_pack.localpath + '#new-features-and-bug-report" target="_blank">' + language_pack.reportbug +'</a></div></div>';
 
 
 			$('#bookmarklet_yt2_container').html(header_bookmarklet_div);
@@ -207,7 +208,7 @@
 			$('#bookmarklet_yt2_content').html('<div id="bookmarklet_yt2_inner_content"><div id="bookmarklet_yt2_inner_content_lyrics"><p style="margin: 8px 0 0 8px">'+ language_pack.loading+'<img src="' + localpath +'resources/ajax-loader.gif" alt="loading" /></p></div></div>');
 
 		var script = document.createElement("script");
-		script.src = "http://lyrics.wikia.com/api.php?fmt=json&artist=" + encodeURIComponent(artist) +"&song=" + encodeURIComponent(title);
+		script.src = "http://lyrics.wikia.com/api.php?fmt=json&artist=" + encodeURIComponent(artist.toLowerCase()) +"&song=" + encodeURIComponent(title.toLowerCase());
 		script.onload = function() {
 
 
@@ -256,13 +257,13 @@
 
                 } catch(e) {
 
-                    var ytLyricsForm = '<form id="ytLyricsForm"><div class="ytLyricsField"><label>' + language_pack.artist + '</label><input type="text" name="artist" id="ytlyricsartist" placeholder="artist" value="' + title + '"/></div>';
-                    ytLyricsForm += '<div class="ytLyricsField"><label>' + language_pack.song + '</label><input type="text" name="title" id="ytlyricstitle" placeholder="song" value="' + artist + '"/></div>';
+                    var ytLyricsForm = '<form id="ytLyricsForm"><div class="ytLyricsField"><label>' + language_pack.artist + '</label><input type="text" name="artist" id="ytlyricsartist" placeholder="artist" value="' + artist + '"/></div>';
+                    ytLyricsForm += '<div class="ytLyricsField"><label>' + language_pack.song + '</label><input type="text" name="title" id="ytlyricstitle" placeholder="song" value="' + title + '"/></div>';
                     ytLyricsForm += '<div class="ytLyricsButton" onclick="javascript:ytLyricsFormSearch2();">'+ language_pack.searchlyrics +'</div></form>';
 
 
                     var ytLyricsOutput = '<div id="bookmarklet_yt2_inner_content">' +'<div id="bookmarklet_yt2_inner_content_lyrics">'
-                    ytLyricsOutput += language_pack.nolyricsfound1 +  artist + language_pack.nolyricsfound2 +title  + language_pack.nolyricsfound3;
+                    ytLyricsOutput += language_pack.nolyricsfound1 +  title + language_pack.nolyricsfound2 +artist  + language_pack.nolyricsfound3;
                     ytLyricsOutput += language_pack.modifysearch + ytLyricsForm + "</div></div>"
 
                     $('#bookmarklet_yt2_content').html( ytLyricsOutput);

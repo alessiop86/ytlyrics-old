@@ -36,7 +36,7 @@
     <div class="monocolumn">
 	<div class="languages"><div class="first active"><a href="../en">English</a></div><div><a href="../it">Italiano</a></div></div>
       <h2 style="clear:both"> <img src="../resources/logo.png" alt="YTLyrics" /> 
-        <a class="box-btn" href="javascript:(function(){  if (document.baseURI.match(/https:\/\//)) { alert('YTLyrics does not work with https protocol, please remove https:// from the address bar');return true; }; var localpath = ''; localpath = 'http://ytlyrics/ytlyrics/';if(window.myBookmarklet!==undefined){ myBookmarklet(); }else{ var scriptz = document.createElement('script'); scriptz.src=localpath + 'resources/bookmarklet.js'; document.body.appendChild(scriptz);  } })();">Get Lyrics - YtLyrics 1.5</a></h2>
+        <a class="box-btn" href="javascript:(function(){  if (document.baseURI.match(/https:\/\//)) { alert('YTLyrics does not work with https protocol, please remove https:// from the address bar');return true; }; var localpath = ''; localpath = 'http://www.summarify.com/ytlyrics/';if(window.myBookmarklet!==undefined){ myBookmarklet(); }else{ var scriptz = document.createElement('script'); scriptz.src=localpath + 'resources/bookmarklet.js'; document.body.appendChild(scriptz);  } })();">Get Lyrics - YtLyrics 1.5</a></h2>
           <img class="content-image " src="../web-resources/tutorial1_eng.png" alt="Tutorial step 1" >
           <img class="content-image " src="../web-resources/tutorial2_eng.png" alt="Tutorial step 2" >
           <img class="content-image " src="../web-resources/tutorial3_eng.png" alt="Tutorial step 3" >
