@@ -1,5 +1,5 @@
 ﻿	var localpath = '';
-	localpath = 'https://bitbucket.org/apiergiacomi/ytlyrics/raw/70f1fa60913753808fc1ad983501cdc8dc81919a/ytlyrics/';
+	localpath = 'https://bitbucket.org/apiergiacomi/ytlyrics/raw/982e6e79de2b98181136d622eb1b493b6537f2e6/ytlyrics/';
 
 
     var language_pack = {

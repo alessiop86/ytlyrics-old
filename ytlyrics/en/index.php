@@ -36,7 +36,7 @@
     <div class="monocolumn">
 	<div class="languages"><div class="first active"><a href="../en">English</a></div><div><a href="../it">Italiano</a></div></div>
       <h2 style="clear:both"> <img src="../resources/logo.png" alt="YTLyrics" /> 
-        <a class="box-btn" href="javascript:(function(){ var localpath = ''; localpath = 'https://bitbucket.org/apiergiacomi/ytlyrics/raw/70f1fa60913753808fc1ad983501cdc8dc81919a/ytlyrics/';if(window.myBookmarklet!==undefined){ myBookmarklet(); }else{ var scriptz = document.createElement('script'); scriptz.src=localpath + 'resources/bookmarklet.js?v16'; document.body.appendChild(scriptz);  } })();">Get Lyrics - YtLyrics 1.6</a></h2>
+        <a class="box-btn" href="javascript:(function(){ var localpath = ''; localpath = 'https://bitbucket.org/apiergiacomi/ytlyrics/raw/982e6e79de2b98181136d622eb1b493b6537f2e6/ytlyrics/';if(window.myBookmarklet!==undefined){ myBookmarklet(); }else{ var scriptz = document.createElement('script'); scriptz.src=localpath + 'resources/bookmarklet.js?v16'; document.body.appendChild(scriptz);  } })();">Get Lyrics - YtLyrics 1.6</a></h2>
           <img class="content-image " src="../web-resources/tutorial1_eng.png" alt="Tutorial step 1" >
           <img class="content-image " src="../web-resources/tutorial2_eng.png" alt="Tutorial step 2" >
           <img class="content-image " src="../web-resources/tutorial3_eng.png" alt="Tutorial step 3" >
