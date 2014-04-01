@@ -1,5 +1,5 @@
 ﻿	var localpath = '';
-	localpath = 'http://www.summarify.com/ytlyrics/'
+	localpath = 'https://bitbucket.org/apiergiacomi/ytlyrics/raw/70f1fa60913753808fc1ad983501cdc8dc81919a/ytlyrics/';
 
 
     var language_pack = {
@@ -47,9 +47,9 @@
 
 
 			//carico il css esterno
-			var fileref=document.createElement("link")
-	  		fileref.setAttribute("rel", "stylesheet")
-	  		fileref.setAttribute("type", "text/css")
+			var fileref=document.createElement("link");
+	  		fileref.setAttribute("rel", "stylesheet");
+	  		fileref.setAttribute("type", "text/css");
 	  		fileref.setAttribute("href", localpath + "resources/bookmarklet.css");
 	 
 			document.getElementsByTagName("head")[0].appendChild(fileref);
@@ -212,7 +212,6 @@
 		script.onload = function() {
 
 
-			var full_lyrics = "";
 
 			YUI().use('node', 'event', 'yql', function(Y) {
 
@@ -239,12 +238,12 @@
 
                                 var ytLyricsForm = '<form id="ytLyricsForm"><div class="ytLyricsField"><label>' + language_pack.artist + '</label><input type="text" name="artist" id="ytlyricsartist" placeholder="artist" value="' + title + '"/></div>';
                                 ytLyricsForm += '<div class="ytLyricsField"><label>' + language_pack.song + '</label><input type="text" name="title" id="ytlyricstitle" placeholder="song" value="' + artist + '"/></div>';
-                                ytLyricsForm += '<div class="ytLyricsButton" onclick="javascript:ytLyricsFormSearch2();">'+ language_pack.searchlyrics +'</div></form>';
+                                ytLyricsForm += '<div class="ytLyricsButton" onclick="ytLyricsFormSearch2();">'+ language_pack.searchlyrics +'</div></form>';
 
 
-                                var ytLyricsOutput = '<div id="bookmarklet_yt2_inner_content">' +'<div id="bookmarklet_yt2_inner_content_lyrics">'
+                                var ytLyricsOutput = '<div id="bookmarklet_yt2_inner_content">' +'<div id="bookmarklet_yt2_inner_content_lyrics">';
                                 ytLyricsOutput += language_pack.nolyricsfound1 +  artist + language_pack.nolyricsfound2 +title  + language_pack.nolyricsfound3;
-                                ytLyricsOutput += language_pack.modifysearch + ytLyricsForm + "</div></div>"
+                                ytLyricsOutput += language_pack.modifysearch + ytLyricsForm + "</div></div>";
 
                                 $('#bookmarklet_yt2_content').html( ytLyricsOutput);
 
@@ -259,12 +258,12 @@
 
                     var ytLyricsForm = '<form id="ytLyricsForm"><div class="ytLyricsField"><label>' + language_pack.artist + '</label><input type="text" name="artist" id="ytlyricsartist" placeholder="artist" value="' + artist + '"/></div>';
                     ytLyricsForm += '<div class="ytLyricsField"><label>' + language_pack.song + '</label><input type="text" name="title" id="ytlyricstitle" placeholder="song" value="' + title + '"/></div>';
-                    ytLyricsForm += '<div class="ytLyricsButton" onclick="javascript:ytLyricsFormSearch2();">'+ language_pack.searchlyrics +'</div></form>';
+                    ytLyricsForm += '<div class="ytLyricsButton" onclick="ytLyricsFormSearch2();">'+ language_pack.searchlyrics +'</div></form>';
 
 
-                    var ytLyricsOutput = '<div id="bookmarklet_yt2_inner_content">' +'<div id="bookmarklet_yt2_inner_content_lyrics">'
+                    var ytLyricsOutput = '<div id="bookmarklet_yt2_inner_content">' +'<div id="bookmarklet_yt2_inner_content_lyrics">';
                     ytLyricsOutput += language_pack.nolyricsfound1 +  title + language_pack.nolyricsfound2 +artist  + language_pack.nolyricsfound3;
-                    ytLyricsOutput += language_pack.modifysearch + ytLyricsForm + "</div></div>"
+                    ytLyricsOutput += language_pack.modifysearch + ytLyricsForm + "</div></div>";
 
                     $('#bookmarklet_yt2_content').html( ytLyricsOutput);
 
@@ -272,6 +271,6 @@
 			});     
 		
 
-		}
+		};
 				document.getElementsByTagName("head")[0].appendChild(script);
 	}
