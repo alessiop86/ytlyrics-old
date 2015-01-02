@@ -1,8 +1,8 @@
 ytlyrics-old
 ============
 
-Old [discontinued, not working] version of Ytlyrics
+Old [discontinued, not working] version of Ytlyrics. 
 
-Please refer to the new ytlyrics repository, this was an old version
+Please go to the new ytlyrics repository (https://github.com/alessiop86/ytlyrics), this was an old version
 of the bookmarklet, blocked from new policies enforced by browser
 against XSS attacks
